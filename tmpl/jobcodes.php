@@ -21,26 +21,26 @@ $site_url = $setup['site_url'];
 <?php	
 	$code = $_POST['jobcode'];
 	$purpose = "Modify";
+	if ($setup['mode']=='d5'){
+		$unit = "District 5";
+		$jobgroup = '28__0';
+		$list = modspecify_jobsHelper::get_committee_list('2___0');
+	}else{
+		$unit = "D5 Squadron";
+		$jobgroup = '38__0';
+		$list = modspecify_jobsHelper::get_committee_list('3___0');
+	}
 	// Displays parameters of a jobcode.  
 	// Creates parameters for a new jobcode 
 	$committee = $named_job = $group = $not_used = "";
 	// Remember what changes are being made to inform PHP in $_POST array
-		if ($setup['squad']=='6243'){
-			$unit = "District 5";
-			$jobgroup = '28__0';
-			$list = $vhqab->getCommitteeList('2___0');
-		}else{
-			$unit = "D5 Squadron";
-			$jobgroup = '38__0';
-			$list = $vhqab->getCommitteeList('3___0');
-		}
 ?>
 	<input type='hidden' name='updating' value='jobcode' />
 	<!--// Always assume we will return focus to the jobcodes list -->
 	<!--// Hidden value may be changed by script to return focus to higher level 'jobs' -->
 	<input type='hidden' name='next' id='next' value='jobs' />
 <?php
-	if (!$ary=$codes->get_record("jobcode",$code)){
+	if (!$ary){
 		$purpose = 'Create';
 		$new = true;
 		$ary = array();
@@ -112,8 +112,7 @@ $site_url = $setup['site_url'];
 	if (($ary['committee']==0) and (substr($code,0,1)==2)){
 ?>
 		You may optionally specify to associate this job with a committee.
-<?php	
-
+<?php		
 		$cmte = $ary['committee_code'];
 		if ($cmte == '')
 			$cmte = 0;
@@ -144,9 +143,23 @@ $site_url = $setup['site_url'];
 	if ($ary['d5_job']==1)
 		echo "<input type='checkbox' name='d5_job' checked >";
 	else 
-		echo "<input type='checkbox' name='d5_job' checked >";
+		echo "<input type='checkbox' name='d5_job' >";
+		echo "&nbsp;&nbsp;Job may be displayed in list;";
+	} else {
+	// for squadrons allow the Display Order to be updated		
+?>
+	<label title="Display Order specifies this jobcode's position in the booklet's squadron page. ">
+		Display Order
+	</label>
+	<input name="display_order" type='text' value="<?php echo $ary['display_order'];?>"> 
+	<label title="Update Order controls the display sequence in this tool.  Provided to synchronize with manual forms. ">
+		Update Order
+	</label>
+	<input name="update_order" type='text' value="<?php echo $ary['update_order'];?>"> 
+<?php
+	}
 ?>	
-	&nbsp;&nbsp;Job may be displayed in list;
+	
 	</p>
 	<p>After making job assignment changes press 
 	<input type='submit' name='command' value='Update'></p>
@@ -154,5 +167,3 @@ $site_url = $setup['site_url'];
 	</td>
 	</tr>
 </table>
-<?php 
-}
