@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.4.1" client="site" method="upgrade">
+	<name>Specify Jobs</name>
+	<author>Joseph P. Gibson</author>
+	<creationDate>January 2018</creationDate>
+	<copyright>Copyright (C) 2018 Joseph P. Gibson. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>joe@joesboat.org</authorEmail>
+	<authorUrl>www.joesboat.org</authorUrl>
+	<version>1.0</version>
+	<description>Specify Jobs - Tool for squadron or district officers maintain a job assignments roster.</description>
+	<files>
+		<filename module="mod_specify_jobs">mod_specify_jobs.php</filename>
+		<filename>index.html</filename>
+		<filename>helper.php</filename>
+		<folder>tmpl</folder>
+	</files>
+	<config>
+		<fields name="params">	
+			<fieldset name="debug" label="Debug Controls">
+	        	<field 	name="log"
+	        			type="list"
+	        			default="0"
+	        			label="Activate Logging"
+	        			description="Set to True to activate logging in module routines." >
+	        		<option value="1">True</option>
+	        		<option value="0">False</option>
+				</field>
+			</fieldset>
+			<fieldset name="org" label="Organization Controls">
+				<field 
+					name="mode"
+					type="list"
+					label="Organization"
+					size= "5"
+					description="Specify District 5 or a District 5 Squadron.  D5 Officers will have access to jobs within their department.  Squadron officers will only be able to assign jobs withing their squadron."
+				>
+					<option value="d5">District 5</option>
+					<option value="squad">A D5 Squadron</option> 
+				</field>	
+			</fieldset>
+		</fields>		
+	</config>
+</extension>
