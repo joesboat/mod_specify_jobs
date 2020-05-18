@@ -156,5 +156,5 @@ static function handle_command(){
 	$vhqab->close();
 	return $setup;
 }
-
+     
 } // End of Class modspecify_jobsHelper
